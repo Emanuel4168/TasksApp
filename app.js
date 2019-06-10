@@ -20,7 +20,7 @@ function saveTask(evt){
     let tasks = JSON.parse(localStorage.getItem('tasks'))
     tasks.push(task)
     localStorage.setItem('tasks',JSON.stringify(tasks))
-    getTasks()
+    update(task)
 }
 
 function getTasks(){
@@ -51,12 +51,27 @@ function deleteTask(title) {
     for(let i = 0; i < tasks.length; i++) {
       if(tasks[i].title == title) {
         tasks.splice(i, 1)
-        return
+        //return
       }
     }
     
     localStorage.setItem('tasks', JSON.stringify(tasks))
     getTasks()
-  }
+}
+
+function update(task){
+    let taskasView = document.getElementById('txtTask')
+
+    let title = task.title
+    let body = task.body
+
+    taskasView.innerHTML += `<div class="card">
+                                    <div class="card-body">
+                                        <p>${title} - ${body}</p>
+                                        <a href="#" onclick="deleteTask('${title}')" class="btn btn-danger"> Delete </a>
+                                    </div> 
+                                </div>`
+
+}
 
 getTasks()
